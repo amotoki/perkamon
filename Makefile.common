@@ -1,7 +1,7 @@
 SUBDIRS += man1 man2a-m man2n-z man3a-f man3g-m man3n-s man3t-z man4 man5 man6 man7a-l man7m-z man8
 
 # Upstream version
-V = 3.31
+V = 3.32
 
 translate: $(patsubst %, process-%, $(SUBDIRS))
 

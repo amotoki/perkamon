@@ -5,7 +5,7 @@ all: translate
 include Makefile.common
 
 # Patch level, may be empty
-P = -1
+P = -000
 
 #  Download tarball
 get-orig-source: man-pages-$(V).tar.bz2
