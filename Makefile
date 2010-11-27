@@ -4,8 +4,8 @@ all: translate
 
 include Makefile.common
 
-# Patch level
-P = 1
+# Patch level, may be empty
+P = -1
 
 #  Download tarball
 get-orig-source: man-pages-$(V).tar.bz2
@@ -75,7 +75,7 @@ release: clean
 	cp Makefile* README perkamon/
 	-cp *.patch perkamon/
 	tar cf - --exclude=.svn po4a | tar xf - -C perkamon
-	ln -s perkamon perkamon-$(V)-$(P)
-	tar jchf perkamon-$(V)-$(P).tar.bz2 --numeric-owner perkamon-$(V)-$(P)
+	ln -s perkamon perkamon-$(V)$(P)
+	tar jchf perkamon-$(V)$(P).tar.bz2 --numeric-owner perkamon-$(V)$(P)
 
 .PHONY: unpack setup
