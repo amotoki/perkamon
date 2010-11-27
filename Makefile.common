@@ -1,0 +1,49 @@
+SUBDIRS += man1 man2a-m man2n-z man3a-f man3g-m man3n-s man3t-z man4 man5 man6 man7a-l man7m-z man8
+
+# Upstream version
+V = 3.31
+
+translate: $(patsubst %, process-%, $(SUBDIRS))
+
+translate-%: setup
+	po4a $(PO4AFLAGS) --variable langs='$(LANGS)' --previous $(PO4APARENT)po4a/$*/$*.cfg
+
+process-%: translate-%
+	@:
+
+stats:: $(patsubst %, stats-%, $(LANGS))
+stats-%:
+	@set -e; for subs in $(SUBDIRS); do \
+	  echo -n "$$subs: "; \
+	  msgfmt -c --statistics -o /dev/null po4a/$$subs/po/$*.po; \
+	done
+	@set -e; for subs in $(SUBDIRS); do \
+	  LC_ALL=C msgfmt -c --statistics -o /dev/null po4a/$$subs/po/$*.po; \
+	done 2>&1 | perl -e '$$f=$$t=$$u; while (<>) {if (/([0-9]*) translated/) {$$t+=$$1;} if (/([0-9]*) untranslated/) {$$u+=$$1;} if (/([0-9]*) fuzzy/) {$$f+=$$1;}} printf "%d translated, %d fuzzy, %d untranslated ==> %.2f%%\n", $$t, $$f, $$u, (100*$$t/($$t+$$f+$$u))'
+
+disable-removed:
+	set -e; for f in po4a/man*/man*.cfg; do \
+	  for i in $$(grep '^\[type: man\]' $$f | sed -e 's,.* build/C/,build/C/,' -e 's, \\,,'); do \
+	    test -f $$i && continue; \
+	    echo "Missing file $$i disabled in $$f"; \
+	    sed -i -e '/\[type: man\] '"$$(echo $$i | sed -e 's,/,\\/,g')"'/,/[^\\]$$/s/^/#/' $$f; \
+	  done; \
+	done
+
+#  Run this target after a new upstream release to see if pages have been added.
+#  Copy and paste output in po4a .cfg files
+print-new-files:
+	@set -e; for f in build/C/man?/*.?; do \
+	  grep -q "^\\[type: man\\] $$f" po4a/man*/man*.cfg && continue; \
+	  l="$${f#build/C/}"; o=$$(echo $$l | sed -e 's,/,/local-,'); \
+	  printf '[type: man] %s \\\n\t%s \\\n' $$f "\$$lang:build/\$$lang/$$l"; \
+	  if grep -q hlm $$f; then printf '\topt:"-o untranslated=hlm" \\\n'; fi; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/local-pre.list \\\n'; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/'$$o'.list \\\n'; \
+	  printf '\tadd_$$lang:?po4a/add_$$lang/perkamon \\\n'; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/'$$l'.list \\\n'; \
+	  printf '\tadd_$$lang:?po4a/add_$$lang/addendum \\\n'; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/local-post.list\n'; \
+	  echo; \
+	done
+
