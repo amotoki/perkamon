@@ -6,7 +6,7 @@ V = 3.31
 translate: $(patsubst %, process-%, $(SUBDIRS))
 
 translate-%: setup
-	po4a $(PO4AFLAGS) --variable langs='$(LANGS)' --previous $(PO4APARENT)po4a/$*/$*.cfg
+	po4a $(PO4AFLAGS) --variable langs='$(LANGS)' --previous $(PERKAMON_PREFIX)po4a/$*/$*.cfg
 
 process-%: translate-%
 	@:
