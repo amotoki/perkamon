@@ -1,13 +1,3 @@
-diff --git a/man3/pthread_sigqueue.3 b/man3/pthread_sigqueue.3
-index ebf995d..c4faa40 100644
---- a/man3/pthread_sigqueue.3
-+++ b/man3/pthread_sigqueue.3
-@@ -99,4 +99,4 @@ This function is a GNU extension.
- .BR sigwait (2),
- .BR pthread_sigmask (3),
- .BR pthreads (7),
--.br SIGNAL (7)
-+.BR signal (7)
 diff --git a/man4/st.4 b/man4/st.4
 index a166d81..fea390b 100644
 --- a/man4/st.4
