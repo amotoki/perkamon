@@ -1,4 +1,4 @@
-OLD_SUBDIRS += man1 man2a-m man2n-z man3a-f man3g-m man3n-s man3t-z man4 man5 man6 man7a-l man7m-z man8
+OLD_SUBDIRS += man1 man2 man3 man4 man5 man6 man7 man8
 
 SUBDIRS += \
 aio \
@@ -18,15 +18,10 @@ keyutils \
 ld \
 linux_module \
 locale \
-man2a-m \
-man2n-z \
-man3a-f \
-man3g-m \
-man3n-s \
-man3t-z \
+man2 \
+man3 \
 man5 \
-man7a-l \
-man7m-z \
+man7 \
 math \
 memory \
 mqueue \
