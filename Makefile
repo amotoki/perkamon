@@ -58,6 +58,9 @@ stamp-setup: stamp-unpack
 	fi
 	touch $@
 
+process-man7: translate-man7
+	for f in build/[!C]*/man7/*.7; do sed -i -e '1s/coding: *[^ ]*/coding: UTF-8/' $$f; done
+
 clean::
 	-rm -f stamp-* temp link
 	-rm -rf man-pages build
