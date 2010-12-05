@@ -1,46 +1,49 @@
 OLD_SUBDIRS += man1 man2a-m man2n-z man3a-f man3g-m man3n-s man3t-z man4 man5 man6 man7a-l man7m-z man8
 
-# man6 is orphaned
 SUBDIRS += \
 aio \
+boot \
 charset \
 complex \
+db \
 dirent \
 epoll \
 error \
 fcntl \
+filesystem \
 iconv \
 inotify \
 intro \
 keyutils \
+ld \
 linux_module \
 locale \
-man1 \
 man2a-m \
 man2n-z \
 man3a-f \
 man3g-m \
 man3n-s \
 man3t-z \
-man4 \
 man5 \
 man7a-l \
 man7m-z \
-man8 \
 math \
 memory \
 mqueue \
 net \
 netlink \
 numa \
+process \
 pthread \
 pwdgrp \
+regexp \
 rpc \
 sched \
 search \
 semaphore \
 signal \
 socket \
+special \
 stdio \
 stdlib \
 string \
