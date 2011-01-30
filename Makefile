@@ -7,26 +7,26 @@ include Makefile.common
 # Patch level, may be empty
 P = 
 
-#  Download tarball
+#  Download tarball
 get-orig-source: man-pages-$(V).tar.bz2
 man-pages-$(V).tar.bz2:
 	wget http://www.kernel.org/pub/linux/docs/man-pages/man-pages-$(V).tar.bz2
 
-#  Unpack sources
+#  Unpack sources
 unpack: stamp-unpack
 stamp-unpack:
 	-rm -rf man-pages-$(V) man-pages
 	$(MAKE) man-pages-$(V).tar.bz2
 	tar jxf man-pages-$(V).tar.bz2
-	#  Remove version from top-level directory so that V variable
-	#  does not have to be used in targets below
+	#  Remove version from top-level directory so that V variable
+	#  does not have to be used in targets below
 	mv man-pages-$(V) man-pages
-	#  Remove stamp-setup to force re-run of 'setup' target
+	#  Remove stamp-setup to force re-run of 'setup' target
 	-rm -f stamp-setup
 	touch $@
 
-#  Prepare sources for being used by po4a.
-#  This target is called once after manual pages are unpacked.
+#  Prepare sources for being used by po4a.
+#  This target is called once after manual pages are unpacked.
 setup: stamp-setup
 stamp-setup: stamp-unpack
 	-rm -rf build
@@ -47,7 +47,7 @@ stamp-setup: stamp-unpack
 	  fi; \
 	done
 	LC_ALL=C sort build/C/link > temp && mv temp build/C/link
-	#  Remove empty directories, if any
+	#  Remove empty directories, if any
 	-rmdir build/C/man* 2>/dev/null
 	#  armscii-8 encoding is missing in Perl, convert to UTF-8 to make po4a work
 	iconv -f armscii-8 -t UTF-8 build/C/man7/armscii-8.7 | sed -e '1s/coding: ARMSCII-8/coding: UTF-8/' > temp && mv temp build/C/man7/armscii-8.7
