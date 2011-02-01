@@ -1,11 +1,63 @@
-PO4AFLAGS = -k 100
-
-all: translate
-
-include Makefile.common
+# Upstream version
+V = 3.32
 
 # Patch level, may be empty
-P = 
+P =
+
+# These variables may be defined by derivatives
+PO4AFLAGS ?= -k 100
+LANGS ?=
+WORK_DIR ?= .
+PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
+	aio \
+	boot \
+	charset \
+	complex \
+	db \
+	dirent \
+	epoll \
+	error \
+	fcntl \
+	filesystem \
+	iconv \
+	inotify \
+	intro \
+	keyutils \
+	ld \
+	linux_module \
+	locale \
+	man2 \
+	man3 \
+	man5 \
+	man7 \
+	math \
+	memory \
+	mqueue \
+	net \
+	netlink \
+	numa \
+	process \
+	pthread \
+	pwdgrp \
+	regexp \
+	rpc \
+	sched \
+	search \
+	semaphore \
+	signal \
+	socket \
+	special \
+	stdio \
+	stdlib \
+	string \
+	time \
+	tty \
+	unistd \
+	utmp \
+	wchar \
+	wctype
+
+all: translate
 
 #  Download tarball
 get-orig-source: man-pages-$(V).tar.bz2
@@ -58,9 +110,6 @@ stamp-setup: stamp-unpack
 	fi
 	touch $@
 
-process-man7: translate-man7
-	for f in build/[!C]*/man7/*.7; do sed -i -e '1s/coding: *[^ ]*/coding: UTF-8/' $$f; done
-
 clean::
 	-rm -f stamp-* temp link
 	-rm -rf man-pages build
@@ -81,4 +130,59 @@ release: clean
 	ln -s perkamon perkamon-$(V)$(P)
 	tar jchf perkamon-$(V)$(P).tar.bz2 --numeric-owner perkamon-$(V)$(P)
 
-.PHONY: unpack setup
+translate: $(patsubst %, process-%, $(PO4A_SUBDIRS))
+
+translate-%: setup
+	po4a $(PO4AFLAGS) --variable langs='$(LANGS)' --previous --srcdir $(WORK_DIR) --destdir $(WORK_DIR) po4a/$*/$*.cfg
+
+process-%: translate-%
+	@:
+
+process-man7: translate-man7
+	for f in $(WORK_DIR)/build/[!C]*/man7/*.7; \
+	do \
+	  test -e $$f || continue; \
+	  sed -i -e '1s/coding: *[^ ]*/coding: UTF-8/' $$f; \
+	done
+
+cfg-%: FORCE
+	po4a $(PO4AFLAGS) --variable langs='$(LANGS)' --previous --srcdir $(WORK_DIR) --destdir $(WORK_DIR) po4a/$*/$*.cfg
+
+stats:: $(patsubst %, stats-%, $(LANGS))
+stats-%:
+	@set -e; for subs in $(PO4A_SUBDIRS); do \
+	  echo -n "$$subs: "; \
+	  msgfmt --statistics -o /dev/null $(WORK_DIR)/po4a/$$subs/po/$*.po; \
+	done
+	@set -e; for subs in $(PO4A_SUBDIRS); do \
+	  LC_ALL=C msgfmt --statistics -o /dev/null $(WORK_DIR)/po4a/$$subs/po/$*.po; \
+	done 2>&1 | perl -e '$$f=$$t=$$u; while (<>) {if (/([0-9]*) translated/) {$$t+=$$1;} if (/([0-9]*) untranslated/) {$$u+=$$1;} if (/([0-9]*) fuzzy/) {$$f+=$$1;}} printf "%d translated, %d fuzzy, %d untranslated ==> %.2f%%\n", $$t, $$f, $$u, (100*$$t/($$t+$$f+$$u))'
+
+disable-removed:
+	@set -e; for f in po4a/*/*.cfg; do \
+	  for i in $$(grep '^\[type: man\]' $$f | sed -e 's,.* build/C/,build/C/,' -e 's, \\,,'); do \
+	    test -f $(WORK_DIR)/$$i && continue; \
+	    echo "Missing file $$i disabled in $$f"; \
+	    sed -i -e '/\[type: man\] '"$$(echo $$i | sed -e 's,/,\\/,g')"'/,/[^\\]$$/s/^/#/' $$f; \
+	  done; \
+	done
+
+#  Run this target after a new upstream release to see if pages have been added.
+#  Copy and paste output in po4a .cfg files
+print-new-files:
+	@set -e; for f in $(WORK_DIR)/build/C/man?/*.?; do \
+	  l="$${f#$(WORK_DIR)/build/C/}"; \
+	  grep -q "^\\[type: man\\] build/C/$$l" po4a/*/*.cfg && continue; \
+	  o=$$(echo $$l | sed -e 's,/,/local-,'); \
+	  printf '[type: man] %s \\\n\t%s \\\n' build/C/$$l "\$$lang:build/\$$lang/$$l"; \
+	  if grep -q hlm $$f; then printf '\topt:"-o untranslated=hlm" \\\n'; fi; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/local-pre.list \\\n'; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/'$$o'.list \\\n'; \
+	  printf '\tadd_$$lang:?po4a/add_$$lang/perkamon \\\n'; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/'$$l'.list \\\n'; \
+	  printf '\tadd_$$lang:?po4a/add_$$lang/addendum \\\n'; \
+	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/local-post.list\n'; \
+	  echo; \
+	done
+
+.PHONY: unpack setup translate stats disable-removed print-new-files clean release FORCE
