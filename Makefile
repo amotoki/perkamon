@@ -151,7 +151,7 @@ cfg-%: FORCE
 stats:: $(patsubst %, stats-%, $(LANGS))
 stats-%:
 	@set -e; for subs in $(PO4A_SUBDIRS); do \
-	  echo -n "$$subs: "; \
+	  echo -n "$$subs: " >&2; \
 	  msgfmt --statistics -o /dev/null $(WORK_DIR)/po4a/$$subs/po/$*.po; \
 	done
 	@set -e; for subs in $(PO4A_SUBDIRS); do \
