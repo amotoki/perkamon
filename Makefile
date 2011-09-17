@@ -90,12 +90,12 @@ stamp-setup: stamp-unpack
 	#      target_man_page src_man_page
 	#  This file is used after pages are translated to create aliases
 	#  of translated manual pages.
-	set -e; cd man-pages; for f in man?/*.?; do \
+	set -e; for f in man-pages/man?/*.?; do \
 	  if sed -e '1,3!d' $$f | grep -q '^\.so'; \
 	  then \
-	    grep '^\.so' $$f | sed -e '1!d' -e 's/^\.so //' -e "s,$$, $$f," >> ../build/C/link; \
+	    grep '^\.so' $$f | sed -e '1!d' -e 's/^\.so //' -e "s,$$, $${f#man-pages/}," >> build/C/link; \
 	  else \
-	    cp $$f ../build/C/$$f; \
+	    cp $$f build/C/$${f#man-pages/}; \
 	  fi; \
 	done
 	LC_ALL=C sort build/C/link > temp && mv temp build/C/link
