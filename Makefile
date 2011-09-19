@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.33
+V = 3.34-git
 
 # Patch level, may be empty
 P =
@@ -66,13 +66,31 @@ man-pages-$(V).tar.bz2:
 
 #  Unpack sources
 unpack: stamp-unpack
-stamp-unpack:
+
+ifeq ($(findstring git,$(V)),)
+stamp-unpack: stamp-unpack-release
+	touch $@
+else
+stamp-unpack: stamp-unpack-git
+	touch $@
+endif
+
+stamp-unpack-release:
 	-rm -rf man-pages-$(V) man-pages
 	$(MAKE) man-pages-$(V).tar.bz2
 	tar jxf man-pages-$(V).tar.bz2
 	#  Remove version from top-level directory so that V variable
 	#  does not have to be used in targets below
 	mv man-pages-$(V) man-pages
+	#  Remove stamp-setup to force re-run of 'setup' target
+	-rm -f stamp-setup
+	touch $@
+
+stamp-unpack-git:
+	$(MAKE) clean
+	-@git submodule add git://github.com/mkerrisk/man-pages.git man-pages-git
+	git submodule init && git submodule update
+	ln -s man-pages-git man-pages
 	#  Remove stamp-setup to force re-run of 'setup' target
 	-rm -f stamp-setup
 	touch $@
