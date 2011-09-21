@@ -1,3 +1,16 @@
+diff --git a/man2/fallocate.2 b/man2/fallocate.2
+index 45b8a21..6b37139 100644
+--- a/man2/fallocate.2
++++ b/man2/fallocate.2
+@@ -128,7 +128,7 @@ is not supported by the file system containing the file referred to by
+ .TP
+ .B EPERM
+ The file referred to by
+-.fd
++.I fd
+ is marked immutable (see
+ .BR chattr (1).
+ .TP
 diff --git a/man4/st.4 b/man4/st.4
 index a166d81..fea390b 100644
 --- a/man4/st.4
