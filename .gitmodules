@@ -1,3 +1,0 @@
-[submodule "man-pages-git"]
-	path = man-pages-git
-	url = git://github.com/mkerrisk/man-pages.git
