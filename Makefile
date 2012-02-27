@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.35
+V = 3.36
 
 # Patch level, may be empty
 P =
@@ -60,10 +60,10 @@ PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 all: translate
 
 #  Download tarball
-get-orig-source: man-pages-$(V).tar.gz
-man-pages-$(V).tar.gz:
-	wget http://man7.org/linux/man-pages/download/man-pages-$(V).tar.gz
-	#wget http://www.kernel.org/pub/linux/docs/man-pages/man-pages-$(V).tar.bz2
+get-orig-source: man-pages-$(V).tar.bz2
+man-pages-$(V).tar.bz2:
+	wget http://www.kernel.org/pub/linux/docs/man-pages/man-pages-$(V).tar.bz2
+	#wget http://man7.org/linux/download/man-pages/man-pages-$(V).tar.gz
 
 #  Unpack sources
 unpack: stamp-unpack
@@ -78,8 +78,8 @@ endif
 
 stamp-unpack-release:
 	-rm -rf man-pages-$(V) man-pages
-	$(MAKE) man-pages-$(V).tar.gz
-	tar zxf man-pages-$(V).tar.gz
+	$(MAKE) man-pages-$(V).tar.bz2
+	tar jxf man-pages-$(V).tar.bz2
 	#  Remove version from top-level directory so that V variable
 	#  does not have to be used in targets below
 	mv man-pages-$(V) man-pages
@@ -142,7 +142,7 @@ reallyclean:: clean
 release: clean
 	-rm -rf perkamon*
 	mkdir perkamon
-	cp man-pages-$(V).tar.gz perkamon/
+	cp man-pages-$(V).tar.bz2 perkamon/
 	cp Makefile* README perkamon/
 	-cp *.patch perkamon/
 	tar cf - --exclude=.svn po4a | tar xf - -C perkamon
