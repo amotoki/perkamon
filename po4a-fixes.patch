@@ -11,3 +11,15 @@ index 37c4dff..775a26d 100644
  They all are reported by
  .BR waitpid (2)
  with
+diff --git a/man8/ld.so.8 b/man8/ld.so.8
+index 5c02204..2fbacae 100644
+--- a/man8/ld.so.8
++++ b/man8/ld.so.8
+@@ -126,6 +126,7 @@ Ignore RPATH and RUNPATH information in object names in LIST.
+ This option is ignored if
+ .B ld.so
+ is set-user-ID or set-group-ID.
++.TP
+ .B \-\-audit LIST
+ Use objects named in LIST as auditors.
+ .SH ENVIRONMENT
