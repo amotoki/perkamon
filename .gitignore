@@ -1,1 +1,5 @@
 po4a/*/po
+/build
+/man-pages-*.tar.*
+/man-pages
+stamp-*
