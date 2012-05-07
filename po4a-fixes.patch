@@ -1,0 +1,26 @@
+diff --git a/man3/posix_memalign.3 b/man3/posix_memalign.3
+index 5d33cba..012860f 100644
+--- a/man3/posix_memalign.3
++++ b/man3/posix_memalign.3
+@@ -259,7 +259,7 @@ and then align the obtained value).
+ .\" but not to
+ .\" .IR realloc (3).
+ The glibc implementation
+-allows memory obtained from any of these these functions to be
++allows memory obtained from any of these functions to be
+ reclaimed with
+ .BR free (3).
+ 
+diff --git a/man7/capabilities.7 b/man7/capabilities.7
+index 8d69ba4..09dc018 100644
+--- a/man7/capabilities.7
++++ b/man7/capabilities.7
+@@ -363,7 +363,7 @@ to insert characters into the input queue of a terminal other than
+ the caller's controlling terminal.
+ .IP *
+ employ the obsolete
+-.BR nfsservctl (2);
++.BR nfsservctl (2)
+ system call;
+ .IP *
+ employ the obsolete
