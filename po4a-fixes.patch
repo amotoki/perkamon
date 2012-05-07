@@ -24,3 +24,16 @@ index 8d69ba4..09dc018 100644
  system call;
  .IP *
  employ the obsolete
+diff --git a/man3/fopen.3 b/man3/fopen.3
+index 820b4ff..b96d08d 100644
+--- a/man3/fopen.3
++++ b/man3/fopen.3
+@@ -327,8 +327,6 @@ If that operation is a wide-character operation,
+ the stream is marked wide-oriented,
+ and functions to convert to the coded character set are loaded.
+ .SH BUGS
+-In versions of glibc before
+-.SH BUGS
+ When parsing for individual flag characters in
+ .IR mode
+ (i.e., the characters preceding the "ccs" specification"),
