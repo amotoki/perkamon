@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.40
+V = 3.41-git
 
 # Patch level, may be empty
 P =
@@ -89,7 +89,7 @@ stamp-unpack-release:
 
 stamp-unpack-git:
 	$(MAKE) clean
-	-@git submodule add git://github.com/mkerrisk/man-pages.git man-pages-git
+	-@git submodule add git://git.kernel.org/pub/scm/docs/man-pages/man-pages.git man-pages-git
 	git submodule init && git submodule update
 	ln -s man-pages-git man-pages
 	#  Remove stamp-setup to force re-run of 'setup' target
