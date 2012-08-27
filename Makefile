@@ -8,6 +8,7 @@ P =
 PO4AFLAGS ?= -k 100
 LANGS ?=
 WORK_DIR ?= .
+UTF8_LOCALE ?= en_US.UTF-8
 PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 	aio \
 	boot \
@@ -203,5 +204,14 @@ print-new-files:
 	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/local-post.list\n'; \
 	  echo; \
 	done
+
+# Check if groff reports warnings (may be words of sentences not displayed)
+# from http://lintian.debian.org/tags/manpage-has-errors-from-man.html
+check-groff-warnings:
+	@for f in $(WORK_DIR)/build/[!C]*/man*/*.*; \
+	  do \
+	     LC_ALL=$(UTF8_LOCALE) MANWIDTH=80 man --warnings -E UTF-8 -l $$f 2>&1 > /dev/null |\
+	       sed -e "s,.,$${f#$(WORK_DIR)/build/}: &,"; \
+	  done
 
 .PHONY: unpack setup translate stats disable-removed print-new-files clean release FORCE
