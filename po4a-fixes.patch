@@ -1,0 +1,24 @@
+diff -ur a/man3/isalpha.3 b/man3/isalpha.3
+--- a/man3/isalpha.3
++++ b/man3/isalpha.3
+@@ -139,7 +139,7 @@
+ and
+ .B """POSIX"""
+ locales, these are: space, form-feed
+-.RB ( \(aq\\f\(aq ),
++.RB ( \(aq\ef\(aq ),
+ newline
+ .RB ( \(aq\\n\(aq ),
+ carriage return
+diff -ur a/man7/man.7 b/man7/man.7
+--- a/man7/man.7
++++ b/man7/man.7
+@@ -427,7 +427,7 @@
+ .BR \\$N ,
+ .BR \\nx ,
+ .BR \\n(xx ,
+-.BR \\fx ,
++.BR \efx ,
+ and
+ .BR \\f(xx .
+ Avoid using the escape sequences for drawing graphics.
