@@ -149,6 +149,7 @@ release: clean man-pages-$(V).tar.bz2
 	tar cf - --exclude=.svn po4a | tar xf - -C perkamon
 	ln -s perkamon perkamon-$(V)$(P)
 	tar jchf perkamon-$(V)$(P).tar.bz2 --numeric-owner perkamon-$(V)$(P)
+	tar Jchf perkamon-$(V)$(P).tar.xz  --numeric-owner perkamon-$(V)$(P)
 
 translate: $(patsubst %, process-%, $(PO4A_SUBDIRS))
 
