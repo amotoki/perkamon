@@ -140,7 +140,7 @@ clean::
 reallyclean:: clean
 	rm -f man-pages-*.tar.*
 
-release: clean
+release: clean man-pages-$(V).tar.bz2
 	-rm -rf perkamon*
 	mkdir perkamon
 	cp man-pages-$(V).tar.bz2 perkamon/
