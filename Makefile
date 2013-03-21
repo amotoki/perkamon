@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.41
+V = 3.50
 
 # Patch level, may be empty
 P =
@@ -8,6 +8,7 @@ P =
 PO4AFLAGS ?= -k 100
 LANGS ?=
 WORK_DIR ?= .
+UTF8_LOCALE ?= en_US.UTF-8
 PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 	aio \
 	boot \
@@ -139,7 +140,7 @@ clean::
 reallyclean:: clean
 	rm -f man-pages-*.tar.*
 
-release: clean
+release: clean man-pages-$(V).tar.bz2
 	-rm -rf perkamon*
 	mkdir perkamon
 	cp man-pages-$(V).tar.bz2 perkamon/
@@ -148,6 +149,7 @@ release: clean
 	tar cf - --exclude=.svn po4a | tar xf - -C perkamon
 	ln -s perkamon perkamon-$(V)$(P)
 	tar jchf perkamon-$(V)$(P).tar.bz2 --numeric-owner perkamon-$(V)$(P)
+	tar Jchf perkamon-$(V)$(P).tar.xz  --numeric-owner perkamon-$(V)$(P)
 
 translate: $(patsubst %, process-%, $(PO4A_SUBDIRS))
 
@@ -203,5 +205,14 @@ print-new-files:
 	  printf '\tadd_$$lang:?@po4a/add_$$lang/lists/local-post.list\n'; \
 	  echo; \
 	done
+
+# Check if groff reports warnings (may be words of sentences not displayed)
+# from http://lintian.debian.org/tags/manpage-has-errors-from-man.html
+check-groff-warnings:
+	@for f in $(WORK_DIR)/build/[!C]*/man*/*.*; \
+	  do \
+	     LC_ALL=$(UTF8_LOCALE) MANWIDTH=80 man --warnings -E UTF-8 -l $$f 2>&1 > /dev/null |\
+	       sed -e "s,.,$${f#$(WORK_DIR)/build/}: &,"; \
+	  done
 
 .PHONY: unpack setup translate stats disable-removed print-new-files clean release FORCE
