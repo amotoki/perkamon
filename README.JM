@@ -1,0 +1,13 @@
+The upstream of this repository is git://gitorious.org/perkamon/man-pages.git
+It is forked to manage Linux JM (Japanese manual) project[1].
+
+[1] git://git.sourceforge.jp:/gitroot/linuxjm/jm.git
+
+
+Notes
+=====
+
+How to merge upstream into this repository.
+
+git remote add upstream git://gitorious.org/perkamon/man-pages.git
+git merge upstream/master
