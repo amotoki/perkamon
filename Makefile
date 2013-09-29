@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.54
+V = 3.55-git
 
 # Patch level, may be empty
 P =
