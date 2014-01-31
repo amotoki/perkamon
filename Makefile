@@ -61,9 +61,9 @@ PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 all: translate
 
 #  Download tarball
-get-orig-source: man-pages-$(V).tar.bz2
-man-pages-$(V).tar.bz2:
-	wget http://www.kernel.org/pub/linux/docs/man-pages/man-pages-$(V).tar.bz2
+get-orig-source: man-pages-$(V).tar.xz
+man-pages-$(V).tar.xz:
+	wget http://www.kernel.org/pub/linux/docs/man-pages/$@
 	#wget http://man7.org/linux/download/man-pages/man-pages-$(V).tar.gz
 
 #  Unpack sources
@@ -79,8 +79,8 @@ endif
 
 stamp-unpack-release:
 	-rm -rf man-pages-$(V) man-pages
-	$(MAKE) man-pages-$(V).tar.bz2
-	tar jxf man-pages-$(V).tar.bz2
+	$(MAKE) man-pages-$(V).tar.xz
+	tar Jxf man-pages-$(V).tar.xz
 	#  Remove version from top-level directory so that V variable
 	#  does not have to be used in targets below
 	mv man-pages-$(V) man-pages
@@ -135,20 +135,19 @@ clean::
 	-rm -rf man-pages build
 	-rm -rf po4a/*/po
 	#  Do not delete tarball in this target
-	#rm -f man-pages-*.tar.bz2
+	#rm -f man-pages-*.tar.xz
 
 reallyclean:: clean
 	rm -f man-pages-*.tar.*
 
-release: clean man-pages-$(V).tar.bz2
+release: clean man-pages-$(V).tar.xz
 	-rm -rf perkamon*
 	mkdir perkamon
-	cp man-pages-$(V).tar.bz2 perkamon/
+	cp man-pages-$(V).tar.xz perkamon/
 	cp Makefile* README perkamon/
 	-cp *.patch perkamon/
 	tar cf - --exclude=.svn po4a | tar xf - -C perkamon
 	ln -s perkamon perkamon-$(V)$(P)
-	tar jchf perkamon-$(V)$(P).tar.bz2 --numeric-owner perkamon-$(V)$(P)
 	tar Jchf perkamon-$(V)$(P).tar.xz  --numeric-owner perkamon-$(V)$(P)
 
 translate: $(patsubst %, process-%, $(PO4A_SUBDIRS))
