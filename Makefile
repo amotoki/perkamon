@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.58
+V = 3.60
 
 # Patch level, may be empty
 P =
@@ -121,8 +121,6 @@ stamp-setup: stamp-unpack
 	LC_ALL=C sort build/C/link > temp && mv temp build/C/link
 	#  Remove empty directories, if any
 	-rmdir build/C/man* 2>/dev/null
-	#  armscii-8 encoding is missing in Perl, convert to UTF-8 to make po4a work
-	iconv -f armscii-8 -t UTF-8 build/C/man7/armscii-8.7 | sed -e '1s/coding: ARMSCII-8/coding: UTF-8/' > temp && mv temp build/C/man7/armscii-8.7
 	#  Apply patches to fix groff syntax errors which  prevent po4a processing
 	if test -f po4a-fixes.patch; \
 	then \
@@ -157,13 +155,6 @@ translate-%: setup
 
 process-%: translate-%
 	@:
-
-process-man7: translate-man7
-	for f in $(WORK_DIR)/build/[!C]*/man7/*.7; \
-	do \
-	  test -e $$f || continue; \
-	  sed -i -e '1s/coding: *[^ ]*/coding: UTF-8/' $$f; \
-	done
 
 cfg-%: FORCE
 	po4a $(PO4AFLAGS) --variable langs='$(LANGS)' --previous --srcdir $(WORK_DIR) --destdir $(WORK_DIR) po4a/$*/$*.cfg
