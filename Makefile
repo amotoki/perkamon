@@ -18,7 +18,6 @@ PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 	dirent \
 	epoll \
 	error \
-	fcntl \
 	filesystem \
 	iconv \
 	inotify \
