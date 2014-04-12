@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.54
+V = 3.63
 
 # Patch level, may be empty
 P =
@@ -18,7 +18,6 @@ PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 	dirent \
 	epoll \
 	error \
-	fcntl \
 	filesystem \
 	iconv \
 	inotify \
@@ -61,9 +60,9 @@ PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 all: translate
 
 #  Download tarball
-get-orig-source: man-pages-$(V).tar.bz2
-man-pages-$(V).tar.bz2:
-	wget http://www.kernel.org/pub/linux/docs/man-pages/man-pages-$(V).tar.bz2
+get-orig-source: man-pages-$(V).tar.xz
+man-pages-$(V).tar.xz:
+	wget http://www.kernel.org/pub/linux/docs/man-pages/$@
 	#wget http://man7.org/linux/download/man-pages/man-pages-$(V).tar.gz
 
 #  Unpack sources
@@ -79,8 +78,8 @@ endif
 
 stamp-unpack-release:
 	-rm -rf man-pages-$(V) man-pages
-	$(MAKE) man-pages-$(V).tar.bz2
-	tar jxf man-pages-$(V).tar.bz2
+	$(MAKE) man-pages-$(V).tar.xz
+	tar Jxf man-pages-$(V).tar.xz
 	#  Remove version from top-level directory so that V variable
 	#  does not have to be used in targets below
 	mv man-pages-$(V) man-pages
@@ -121,8 +120,6 @@ stamp-setup: stamp-unpack
 	LC_ALL=C sort build/C/link > temp && mv temp build/C/link
 	#  Remove empty directories, if any
 	-rmdir build/C/man* 2>/dev/null
-	#  armscii-8 encoding is missing in Perl, convert to UTF-8 to make po4a work
-	iconv -f armscii-8 -t UTF-8 build/C/man7/armscii-8.7 | sed -e '1s/coding: ARMSCII-8/coding: UTF-8/' > temp && mv temp build/C/man7/armscii-8.7
 	#  Apply patches to fix groff syntax errors which  prevent po4a processing
 	if test -f po4a-fixes.patch; \
 	then \
@@ -135,20 +132,19 @@ clean::
 	-rm -rf man-pages build
 	-rm -rf po4a/*/po
 	#  Do not delete tarball in this target
-	#rm -f man-pages-*.tar.bz2
+	#rm -f man-pages-*.tar.xz
 
 reallyclean:: clean
 	rm -f man-pages-*.tar.*
 
-release: clean man-pages-$(V).tar.bz2
+release: clean man-pages-$(V).tar.xz
 	-rm -rf perkamon*
 	mkdir perkamon
-	cp man-pages-$(V).tar.bz2 perkamon/
+	cp man-pages-$(V).tar.xz perkamon/
 	cp Makefile* README perkamon/
 	-cp *.patch perkamon/
 	tar cf - --exclude=.svn po4a | tar xf - -C perkamon
 	ln -s perkamon perkamon-$(V)$(P)
-	tar jchf perkamon-$(V)$(P).tar.bz2 --numeric-owner perkamon-$(V)$(P)
 	tar Jchf perkamon-$(V)$(P).tar.xz  --numeric-owner perkamon-$(V)$(P)
 
 translate: $(patsubst %, process-%, $(PO4A_SUBDIRS))
@@ -158,13 +154,6 @@ translate-%: setup
 
 process-%: translate-%
 	@:
-
-process-man7: translate-man7
-	for f in $(WORK_DIR)/build/[!C]*/man7/*.7; \
-	do \
-	  test -e $$f || continue; \
-	  sed -i -e '1s/coding: *[^ ]*/coding: UTF-8/' $$f; \
-	done
 
 cfg-%: FORCE
 	po4a $(PO4AFLAGS) --variable langs='$(LANGS)' --previous --srcdir $(WORK_DIR) --destdir $(WORK_DIR) po4a/$*/$*.cfg
