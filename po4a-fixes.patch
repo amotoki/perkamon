@@ -1,0 +1,14 @@
+diff --git a/manual/LDP_man-pages/original/man2/fallocate.2 b/manual/LDP_man-pages/original/man2/fallocate.2
+index 12dc18c..28d0f34 100644
+--- a/man2/fallocate.2
++++ b/man2/fallocate.2
+@@ -238,7 +238,8 @@ mode contains both
+ and other flags;
+ no other flags are permitted with
+ .BR FALLOC_FL_COLLAPSE_RANGE .
+-.TP EINVAL
++.TP
++.B EINVAL
+ .I mode
+ is
+ .BR FALLOC_FL_COLLAPSE_RANGE ,
