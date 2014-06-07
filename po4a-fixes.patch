@@ -1,0 +1,26 @@
+diff --git a/man2/recv.2 b/man2/recv.2
+index 6815fd7..3b82bbd 100644
+--- a/man2/recv.2
++++ b/man2/recv.2
+@@ -330,7 +330,7 @@ The caller should set
+ .I msg_namelen
+ to the size of this buffer before this call;
+ upon return from a successful call,
+-.I msg_name
++.I msg_namelen
+ will contain the length of the returned address.
+ If the application does not need to know the source address,
+ .I msg_name
+diff --git a/man2/send.2 b/man2/send.2
+index c0ee0cf..8051198 100644
+--- a/man2/send.2
++++ b/man2/send.2
+@@ -262,7 +262,7 @@ The
+ field is used on an unconnected socket to specify the target
+ address for a datagram.
+ It points to a buffer containing the address; the
+-.I msg_name
++.I msg_namelen
+ field should be set to the size of the address.
+ For a connected socket, these fields should be specified as NULL and 0,
+ respectively.
