@@ -20,7 +20,7 @@ PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 	error \
 	filesystem \
 	iconv \
-	inotify \
+	notify \
 	intro \
 	keyutils \
 	ld \
