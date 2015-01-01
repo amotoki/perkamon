@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.68
+V = 3.75
 
 # Patch level, may be empty
 P =
@@ -20,7 +20,7 @@ PO4A_SUBDIRS ?= $(EXTRA_PO4A_SUBDIRS) \
 	error \
 	filesystem \
 	iconv \
-	inotify \
+	notify \
 	intro \
 	keyutils \
 	ld \
