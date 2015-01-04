@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.75
+V = 3.76
 
 # Patch level, may be empty
 P =
