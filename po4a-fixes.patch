@@ -109,3 +109,44 @@ index ce975dd..6f02e7a 100644
  glibc implementation of these functions:
  .IP * 3
  The domain error case where
+diff --git a/man2/statfs.2 b/man2/statfs.2
+index 490d96d..8269a19 100644
+--- a/man2/statfs.2
++++ b/man2/statfs.2
+@@ -143,8 +143,8 @@ Filesystem types:
+ .in
+ .PP
+ Most of these MAGIC constants are defined in
+-.I /usr/include/linux/magic.h
+-some are hardcoded in kernel sources.
++.IR /usr/include/linux/magic.h ,
++and some are hardcoded in kernel sources.
+ .PP
+ Nobody knows what
+ .I f_fsid
+diff --git a/man2/readlink.2 b/man2/readlink.2
+index 41523b8..720fa99 100644
+--- a/man2/readlink.2
++++ b/man2/readlink.2
+@@ -138,7 +138,7 @@ Since Linux 2.6.39,
+ can be an empty string,
+ in which case the call operates on the symbolic link referred to by
+ .IR dirfd
+-(which should have have been obtained using
++(which should have been obtained using
+ .BR open (2)
+ with the
+ .B O_PATH
+diff --git a/man2/setsid.2 b/man2/setsid.2
+index cff8e22..ee9abac 100644
+--- a/man2/setsid.2
++++ b/man2/setsid.2
+@@ -76,7 +76,7 @@ The session ID is preserved across an
+ 
+ A process group leader is a process whose process group ID equals its PID.
+ Disallowing a process group leader from calling
+-.BR setsid()
++.BR setsid ()
+ prevents the possibility that a process group leader places itself
+ in a new session while other processes in the process group remain
+ in the original session;
