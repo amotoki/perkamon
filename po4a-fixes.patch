@@ -187,3 +187,42 @@ index 9b1d506..3bc1f9a 100644
  .I flags
  and the caller is in a chroot environment
  .\" FIXME What is the rationale for this restriction?
+diff --git a/man2/rename.2 b/man2/rename.2
+index bd37428..d30cf8b 100644
+--- a/man2/rename.2
++++ b/man2/rename.2
+@@ -186,7 +186,7 @@ argument is a bit mask consisting of zero or more of the following flags:
+ .TP
+ .B RENAME_NOREPLACE
+ Don't overwrite
+-.IR newpath .
++.I newpath
+ of the rename.
+ Return an error if
+ .IR newpath
+diff --git a/man3/printf.3 b/man3/printf.3
+index c6fe88c..e03453b 100644
+--- a/man3/printf.3
++++ b/man3/printf.3
+@@ -804,7 +804,7 @@ or
+ The number of characters written so far is stored into the integer
+ pointed to by the corresponding argument.
+ That argument shall be an
+-.I "int\ *",
++.IR "int\ *" ,
+ or variant whose size matches the (optionally)
+ supplied integer length modifier.
+ No argument is converted.
+diff --git a/man7/pid_namespaces.7 b/man7/pid_namespaces.7
+index e6aaa60..c465950 100644
+--- a/man7/pid_namespaces.7
++++ b/man7/pid_namespaces.7
+@@ -222,7 +222,7 @@ can't be combined with some other
+ flags:
+ .IP * 3
+ .B CLONE_THREAD
+-requires being in the same PID namespace in order that that
++requires being in the same PID namespace in order that
+ the threads in a process can send signals to each other.
+ Similarly, it must be possible to see all of the threads
+ of a processes in the
