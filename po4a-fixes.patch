@@ -74,3 +74,42 @@ index e6aaa60..c465950 100644
  the threads in a process can send signals to each other.
  Similarly, it must be possible to see all of the threads
  of a processes in the
+diff --git a/man2/adjtimex.2 b/man2/adjtimex.2
+index ea94610..954ffb1 100644
+--- a/man2/adjtimex.2
++++ b/man2/adjtimex.2
+@@ -195,7 +195,7 @@ which specifies an adjustment in microseconds.
+ .\" In kernel space there is ADJ_OFFSET_READONLY (0x2000) anded with
+ .\" ADJ_ADJTIME (0x8000) and ADJ_OFFSET_SINGLESHOT (0x0001) to give 0xa001)
+ Return (in
+-.BR buf.offset )
++.IR buf.offset )
+ the remaining amount of time to be adjusted after an earlier
+ .BR ADJ_OFFSET_SINGLESHOT
+ operation.
+diff --git a/man5/locale.5 b/man5/locale.5
+index 64444e0..e73a471 100644
+--- a/man5/locale.5
++++ b/man5/locale.5
+@@ -785,7 +785,7 @@ The same values are recognized as for
+ .TP
+ .I int_p_sign_posn
+ followed by an integer that indicates where the
+-.I negative_sign
++.I positive_sign
+ should be placed for a nonnegative
+ internationally formatted monetary quantity.
+ The same values are recognized as for
+diff --git a/man7/user_namespaces.7 b/man7/user_namespaces.7
+index ce4955b..30c5a7d 100644
+--- a/man7/user_namespaces.7
++++ b/man7/user_namespaces.7
+@@ -292,7 +292,7 @@ flags
+ and the "atime" flags
+ .RB ( MS_NOATIME ,
+ .BR MS_NODIRATIME ,
+-.BR MS_RELATIME)
++.BR MS_REALTIME)
+ settings become locked
+ .\" commit 9566d6742852c527bf5af38af5cbb878dad75705
+ .\" Author: Eric W. Biederman <ebiederm@xmission.com>
