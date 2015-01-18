@@ -113,3 +113,16 @@ index ce4955b..30c5a7d 100644
  settings become locked
  .\" commit 9566d6742852c527bf5af38af5cbb878dad75705
  .\" Author: Eric W. Biederman <ebiederm@xmission.com>
+diff --git a/man2/fanotify_mark.2 b/man2/fanotify_mark.2
+index 32ecfd5..bab5d2c 100644
+--- a/man2/fanotify_mark.2
++++ b/man2/fanotify_mark.2
+@@ -72,7 +72,7 @@ will occur.
+ .B FAN_MARK_FLUSH
+ Remove either all mount or all non-mount marks from the fanotify group.
+ If
+-.I flag
++.I flags
+ contains
+ .BR FAN_MARK_MOUNT ,
+ all marks for mounts are removed from the group.
