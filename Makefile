@@ -1,5 +1,5 @@
 # Upstream version
-V = 3.77
+V = 3.78-git-80a7408
 
 # Patch level, may be empty
 P =
