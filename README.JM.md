@@ -9,6 +9,13 @@ but the repository are frequently synced with the upsream.
 * [2] http://gitorious.org/perkamon/man-pages
 * [3] http://linuxjm.sourceforge.jp/
 
+Main differences
+================
+
+Only difference from the upstream is:
+
+* to have entries for `mdoc.7` and `mdoc.samples.7` (mdoc style man pages)
+
 How to import changes in the upstream
 =====================================
 
