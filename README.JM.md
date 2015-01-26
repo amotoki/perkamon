@@ -30,7 +30,7 @@ How to update the target version of LDP man-pages
         rm -f stamp-*
         make setup
 
-3. Check if new man pages are added. If something is printed, please add it to an appropriate po4a cfg **po4a/*/*.cfg:
+3. Check if new man pages are added. If something is printed, please add it to an appropriate po4a cfg **po4a/\*/\*.cfg**:
 
         make print-new-files
 
