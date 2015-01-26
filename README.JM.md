@@ -5,9 +5,9 @@ This is a forked version of perkamon project [1] repository [2].
 It is forked to manage Linux JM (Japanese manual) project [3],
 but the repository are frequently synced with the upsream.
 
-[1] http://perkamon.alioth.debian.org/
-[2] http://gitorious.org/perkamon/man-pages
-[3] http://linuxjm.sourceforge.jp/
+* [1] http://perkamon.alioth.debian.org/
+* [2] http://gitorious.org/perkamon/man-pages
+* [3] http://linuxjm.sourceforge.jp/
 
 How to import changes in the upstream
 =====================================
