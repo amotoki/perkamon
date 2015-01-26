@@ -17,6 +17,30 @@ How to merge upstream into this repository:
     $ git remote add upstream git://gitorious.org/perkamon/man-pages.git
     $ git merge upstream/master
 
+How to update the target version of LDP man-pages
+=================================================
+
+1. Update the upstream version in Makefile:
+
+        V = 3.78
+
+2. Refresh working directories.
+   This downloads a new version of man-pages tarball and recreate the working directory under **build/**:
+
+        rm -f stamp-*
+        make setup
+
+3. Check if new man pages are added. If something is printed, please add it to an appropriate po4a cfg **po4a/*/*.cfg:
+
+        make print-new-files
+
+4. Check if some pages have been removed.:
+
+        make disable-removed
+
+5. Finally commit:
+
+
 Using git-submodule
 ===================
 
