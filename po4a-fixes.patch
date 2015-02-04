@@ -1,25 +1,3 @@
-diff --git a/man1/locale.1 b/original/man1/locale.1
-index ef240be..650a36e 100644
---- a/man1/locale.1
-+++ b/man1/locale.1
-@@ -65,7 +65,7 @@ metadata about each locale to be included in the output.
- Display the available charmaps (character set description files).
- .PP
- The
--.I locale
-+.B locale
- command can also be provided with one or more arguments,
- which are the names of locale keywords (for example,
- .IR date_fmt ,
-@@ -108,7 +108,7 @@ so that the output has the format:
-     \fIkeyword\fP="\fIvalue\fP"
- .PP
- The
--.I locale
-+.B locale
- command also knows about the following options:
- .TP
- .BR \-v ", " \-\-verbose
 diff --git a/man2/restart_syscall.2 b/original/man2/restart_syscall.2
 index a71b618..33081b7 100644
 --- a/man2/restart_syscall.2
@@ -42,3 +20,29 @@ index a71b618..33081b7 100644
  is largely invisible:
  to the process that made the system call that is restarted,
  it appears as though that system call executed and
+diff --git a/man2/add_key.2 b/original/man2/add_key.2
+index cd826eb..49af340 100644
+--- a/man2/add_key.2
++++ b/man2/add_key.2
+@@ -39,7 +39,7 @@ way invalid.
+ If the destination
+ .I keyring
+ already contains a key that matches the specified
+-.IR type " and " description,
++.IR type " and " description ,
+ then, if the key type supports it, that key will be updated rather than a new
+ key being created; if not, a new key will be created and it will displace the
+ link to the extant key from the keyring.
+diff --git a/man3/getauxval.3 b/original/man3/getauxval.3
+index e3b8cb6..1fca73a 100644
+--- a/man3/getauxval.3
++++ b/man3/getauxval.3
+@@ -228,7 +228,7 @@ there was no way to unambiguously distinguish the case where
+ .I type
+ could not be found from the case where the value corresponding to
+ .I type
+-was zer0.
++was zero.
+ .SH SEE ALSO
+ .BR secure_getenv (3),
+ .BR vdso (7),
