@@ -62,8 +62,7 @@ all: translate
 #  Download tarball
 get-orig-source: man-pages-$(V).tar.xz
 man-pages-$(V).tar.xz:
-	wget http://www.kernel.org/pub/linux/docs/man-pages/$@
-	#wget http://man7.org/linux/download/man-pages/man-pages-$(V).tar.gz
+	wget https://mirrors.edge.kernel.org/pub/linux/docs/man-pages/Archive/$@
 
 #  Unpack sources
 unpack: stamp-unpack
